@@ -1,15 +1,14 @@
-import { i18n } from '@lingui/core';
-import { t } from '@lingui/core/macro';
-import { I18nProvider } from '@lingui/react';
-import { LoadingOverlay, Text } from '@mantine/core';
-import { useEffect, useRef, useState } from 'react';
+import { i18n } from "@lingui/core";
+import { t } from "@lingui/core/macro";
+import { I18nProvider } from "@lingui/react";
+import { useEffect, useRef, useState, PropsWithChildren } from "react";
 
-import { api } from '../App';
-import { useServerApiState } from '../states/ApiState';
-import { useLocalState } from '../states/LocalState';
-import { fetchGlobalStates } from '../states/states';
+import { api } from "../api";
+import { useServerApiState } from "../states/ApiState";
+import { useLocalState } from "../states/LocalState";
+import { fetchGlobalStates } from "../states";
 
-export const defaultLocale = 'en';
+export const defaultLocale = "en";
 
 /*
  * Function which returns a record of supported languages.
@@ -54,13 +53,11 @@ export const getSupportedLanguages = (): Record<string, string> => {
     uk: t`Ukrainian`,
     vi: t`Vietnamese`,
     zh_Hans: t`Chinese (Simplified)`,
-    zh_Hant: t`Chinese (Traditional)`
+    zh_Hant: t`Chinese (Traditional)`,
   };
 };
 
-export function LanguageContext({
-  children
-}: Readonly<{ children: JSX.Element }>) {
+export const LanguageContext = ({ children }: PropsWithChildren<{}>) => {
   const [language] = useLocalState((state) => [state.language]);
   const [server] = useServerApiState((state) => [state.server]);
 
@@ -69,8 +66,8 @@ export function LanguageContext({
   }, []);
 
   const [loadedState, setLoadedState] = useState<
-    'loading' | 'loaded' | 'error'
-  >('loading');
+    "loading" | "loaded" | "error"
+  >("loading");
   const isMounted = useRef(true);
 
   useEffect(() => {
@@ -78,7 +75,7 @@ export function LanguageContext({
 
     activateLocale(language)
       .then(() => {
-        if (isMounted.current) setLoadedState('loaded');
+        if (isMounted.current) setLoadedState("loaded");
 
         /*
          * Configure the default Accept-Language header for all requests.
@@ -88,7 +85,7 @@ export function LanguageContext({
          */
         const locales: (string | undefined)[] = [];
 
-        if (language != 'pseudo-LOCALE') {
+        if (language != "pseudo-LOCALE") {
           locales.push(language);
         }
 
@@ -96,21 +93,21 @@ export function LanguageContext({
           locales.push(server.default_locale);
         }
 
-        if (locales.indexOf('en-us') < 0) {
-          locales.push('en-us');
+        if (locales.indexOf("en-us") < 0) {
+          locales.push("en-us");
         }
 
         // Ensure that the locales are properly formatted
         const new_locales = locales
-          .map((locale) => locale?.replaceAll('_', '-').toLowerCase())
-          .join(', ');
+          .map((locale) => locale?.replaceAll("_", "-").toLowerCase())
+          .join(", ");
 
-        if (new_locales == api.defaults.headers.common['Accept-Language']) {
+        if (new_locales == api.defaults.headers.common["Accept-Language"]) {
           return;
         }
 
         // Update default Accept-Language headers
-        api.defaults.headers.common['Accept-Language'] = new_locales;
+        api.defaults.headers.common["Accept-Language"] = new_locales;
 
         // Reload server state (and refresh status codes)
         fetchGlobalStates();
@@ -120,8 +117,8 @@ export function LanguageContext({
       })
       /* istanbul ignore next */
       .catch((err) => {
-        console.error('ERR: Failed loading translations', err);
-        if (isMounted.current) setLoadedState('error');
+        console.error("ERR: Failed loading translations", err);
+        if (isMounted.current) setLoadedState("error");
       });
 
     return () => {
@@ -129,27 +126,28 @@ export function LanguageContext({
     };
   }, [language]);
 
-  if (loadedState === 'loading') {
+  if (loadedState === "loading") {
     return <div>loading overlay visibled</div>;
   }
 
   /* istanbul ignore next */
-  if (loadedState === 'error') {
+  if (loadedState === "error") {
     return (
-      <Text>
+      <div>
         An error occurred while loading translations, see browser console for
         details.
-      </Text>
+      </div>
     );
   }
 
   // only render the i18n Provider if the locales are fully activated, otherwise we end
   // up with an error in the browser console
   return <I18nProvider i18n={i18n}>{children}</I18nProvider>;
-}
+};
 
 export async function activateLocale(locale: string) {
   const { messages } = await import(`../locales/${locale}/messages.ts`);
+
   i18n.load(locale, messages);
   i18n.activate(locale);
 }
