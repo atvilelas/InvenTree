@@ -1,17 +1,17 @@
-import { Trans } from "@lingui/react/macro";
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Divider } from "@heroui/divider";
-import { useNavigate } from "react-router-dom";
-import { LanguageContext } from "@lib/contexts/LanguageProvider";
-import { Alert } from "@lib/images/Alert";
-import { LinkBack } from "@lib/images/LinkBack";
+import { Trans } from '@lingui/react/macro';
+import { Button } from '@heroui/button';
+import { Card, CardBody, CardHeader } from '@heroui/card';
+import { Divider } from '@heroui/divider';
+import { useNavigate } from 'react-router-dom';
+import { LanguageContext } from '@lib/contexts/LanguageProvider';
+import { Alert } from '@lib/images/Alert';
+import { LinkBack } from '@lib/images/LinkBack';
 
-import { Center } from "@/components/replacements/Center";
-import { Container } from "@/components/replacements/Container";
-import { Group } from "@/components/replacements/Group";
-import { Stack } from "@/components/replacements/Stack";
-import { Text } from "@/components/replacements/Text";
+import { Center } from '@/components/replacements/Center';
+import { Container } from '@/components/replacements/Container';
+import { Group } from '@/components/replacements/Group';
+import { Stack } from '@/components/replacements/Stack';
+import { Text } from '@/components/replacements/Text';
 
 export const GenericError = ({
   title,
@@ -55,7 +55,7 @@ export const GenericError = ({
                 <Button
                   color="success"
                   variant="light"
-                  onPress={() => navigate("/")}
+                  onPress={() => navigate('/')}
                 >
                   <Trans>Return to the index page</Trans>
                   <LinkBack />

@@ -19,6 +19,7 @@ import './styles/overrides.css';
 import { getBaseUrl } from '@lib/functions/Navigation';
 import type { HostList } from '@lib/types/Server';
 import MainView from './views/MainView';
+import './globals.css';
 
 // define settings
 declare global {

@@ -7,5 +7,9 @@
     "allowSyntheticDefaultImports": true,
     "strict": true
   },
-  "include": ["version-info.ts", "vite.config.ts", "vite.plugins.extractSvg.ts"]
+  "include": [
+    "version-info.ts",
+    "vite.config.ts",
+    "vite.plugins.extractIcon.ts"
+  ]
 }

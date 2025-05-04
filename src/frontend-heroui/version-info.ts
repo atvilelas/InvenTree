@@ -2,9 +2,9 @@
  * Extract package version information from package.json
  */
 
-import { readFileSync } from "node:fs";
+import { readFileSync } from 'node:fs';
 
-const packageJson = JSON.parse(readFileSync("./package.json", "utf-8"));
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf-8'));
 
 // Function to get the version of a specific package
 function getPackageVersion(pkg: string) {
@@ -36,6 +36,6 @@ export const INVENTREE_LIB_VERSION: string = JSON.stringify(
 // This is because we need to ensure that the versions of these packages are compatible with plugins
 export const __INVENTREE_VERSION_INFO__ = {
   __INVENTREE_LIB_VERSION__: INVENTREE_LIB_VERSION,
-  __INVENTREE_REACT_VERSION__: getPackageVersion("react"),
-  __INVENTREE_REACT_DOM_VERSION__: getPackageVersion("react-dom"),
+  __INVENTREE_REACT_VERSION__: getPackageVersion('react'),
+  __INVENTREE_REACT_DOM_VERSION__: getPackageVersion('react-dom'),
 };

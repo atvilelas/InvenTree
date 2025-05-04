@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-import { ExtractSVGWatcher } from "./vite.plugins.extractSvg";
+import { ExtractSVGWatcher } from "./vite.plugins.extractIcon";
 import { __INVENTREE_VERSION_INFO__ } from "./version-info";
 
 // Detect if the current environment is WSL

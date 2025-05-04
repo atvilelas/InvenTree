@@ -4,10 +4,10 @@ export const cssUnitPair = (value: string): [number, string] => {
   if (!match) {
     console.warn(`Invalid CSS unit value: "${value}"`);
 
-    return [1, ""];
+    return [1, 'rem'];
   }
   const number = parseFloat(match[1]);
-  const unit = match[2] || "";
+  const unit = match[2] || '';
 
   return [number, unit];
 };

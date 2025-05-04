@@ -102,7 +102,6 @@ const findIconProps = (componentText: string, file: string): IconProps[] => {
   const attr2Regex = /(\w+)\s*=\s*"([^"]+)"/g;
 
   while ((match = tag2Regex.exec(componentText)) !== null) {
-    
     const propsString = match[1];
     const icon: IconProps = {};
 
@@ -332,7 +331,7 @@ export default ${icon.componentName};
 
       return "downloaded";
     } else {
-//      console.log(`Icon: ${JSON.stringify(icon, undefined, 2)} is cached.`);
+      //      console.log(`Icon: ${JSON.stringify(icon, undefined, 2)} is cached.`);
 
       return "cached";
     }
